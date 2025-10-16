@@ -2,6 +2,11 @@
 
 class camera {
     public:
+
+    vec3 position;
+    //Направление всгляда камеры лежит в basis.yVec
+    matrix3 basis{vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)};
+
     camera(vec3 position = vec3(0, 0, 0)) {
         this->position = position;
     }
@@ -18,10 +23,6 @@ class camera {
 
     friend std::ostream& operator<<(std::ostream& stream, camera cam);
 
-    private:
-    vec3 position;
-    //Направление всгляда камеры лежит в basis.yVec
-    matrix3 basis{vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1)};
 };
 
 

@@ -1,7 +1,11 @@
 #include"commonLibs.h"
 
+
+
 class vec3 {
     public:
+    double x, y, z;
+        
     vec3(double x, double y, double z){
         this->x = x;
         this->y = y;
@@ -32,9 +36,11 @@ class vec3 {
         return vec3(this->x * coef, this->y * coef, this->z * coef);
     }
     
-    vec3 operator*(matrix3 basis) {
-        return vec3();
-    }
+    // vec3 operator*(matrix3 basis) {
+    //     return vec3(this->x * basis.xVec.x + this->y * basis.yVec.x + this->z * basis.zVec.x, 
+    //                 this->x * basis.xVec.y + this->y * basis.yVec.y + this->z * basis.zVec.y,
+    //                 this->x * basis.xVec.z + this->y * basis.yVec.z + this->z * basis.zVec.z);
+    // }
 
     void operator*=(double coef) {
         *this = *this * coef;
@@ -73,7 +79,7 @@ class vec3 {
         return *this / this->lenth();
     }
 
-    int scalarMult(const vec3 other_vector) {
+    double scalarMult(const vec3 other_vector) {
         return (this->x * other_vector.x) + (this->y * other_vector.y) + (this->z * other_vector.z);
     }
 
@@ -85,11 +91,7 @@ class vec3 {
         return cords;
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const vec3& vec);
-    friend vec3 vectorMult(vec3 vector1, vec3 vector2);
 
-    private:
-    double x, y, z;
 };
 
 std::ostream& operator<< (std::ostream& stream, const vec3& vec) {

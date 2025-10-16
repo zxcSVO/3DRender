@@ -2,6 +2,9 @@
 
 class polygon {
     public:
+    
+    vec3 d1, d2, d3;
+    
     polygon(vec3 d1, vec3 d2, vec3 d3) {
         this->d1 = d1;
         this->d2 = d2;
@@ -14,17 +17,11 @@ class polygon {
 
     friend std::ostream& operator<<(std::ostream& stream, polygon pol);
 
-    private:
-    vec3 d1, d2, d3;
 };
 
 std::ostream& operator<<(std::ostream& stream, polygon pol) {
-    std::vector<double> d1, d2, d3;
-    d1 = pol.d1.getCords();
-    d2 = pol.d2.getCords();
-    d3 = pol.d3.getCords();
-    stream << '(' << d1[0] << ' ' << d1[1] << ' ' << d1[2] << ')' << std::endl;
-    stream << '(' << d2[0] << ' ' << d2[1] << ' ' << d2[2] << ')' << std::endl;
-    stream << '(' << d3[0] << ' ' << d3[1] << ' ' << d3[2] << ')' << std::endl;
+    stream << '(' << pol.d1.x << ' ' << pol.d1.y << ' ' << pol.d1.z << ')' << std::endl;
+    stream << '(' << pol.d2.x << ' ' << pol.d2.y << ' ' << pol.d2.z << ')' << std::endl;
+    stream << '(' << pol.d3.x << ' ' << pol.d3.y << ' ' << pol.d3.z << ')' << std::endl;
     return stream;
 }
