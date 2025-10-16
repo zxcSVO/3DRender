@@ -1,10 +1,10 @@
 #include"libs/commonLibs.h"
 
 int main() {
-    vec3 v1{0, 0, 0};
-    vec3 v2{-1, 1, 0};
-    vec3 v3{1, 1, 0};
-    polygon p1 {v1, v2, v3};
-    std::cout << p1.normal();
+    camera cam{vec3(2, 2, 0)};
+    vec3 test{3, 3, 0};
+    std::cout << cam.convertToCamera(test);
+    
     return 0;
 }
+// добавить преобразование точек в базис камеры

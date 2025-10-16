@@ -6,6 +6,9 @@
 
 class dot3 {
     public:
+    
+    double x, y, z;
+    
     dot3(double x, double y, double z) {
         this->x = x;
         this->y = y;
@@ -18,24 +21,20 @@ class dot3 {
     }
 
     dot3 operator+(vec3 vector) {
-        std::vector<double> cords = vector.getCords();
-        return dot3(this->x + cords[0], this->y + cords[1], this->z + cords[2]);
+        return dot3(this->x + vector.x, this->y + vector.y, this->z + vector.z);
     }
     dot3 operator-(vec3 vector) {
-        std::vector<double> cords = vector.getCords();
-        return dot3(this->x - cords[0], this->y - cords[1], this->z - cords[2]);
+        return dot3(this->x - vector.x, this->y - vector.y, this->z - vector.z);
     }
     void operator+=(vec3 vector) {
-        std::vector<double> cords = vector.getCords();
-        this->x = this->x + cords[0];
-        this->y = this->y + cords[1];
-        this->z = this->z + cords[2];
+        this->x = this->x + vector.x;
+        this->y = this->y + vector.y;
+        this->z = this->z + vector.z;
     }
     void operator-=(vec3 vector) {
-        std::vector<double> cords = vector.getCords();
-        this->x = this->x - cords[0];
-        this->y = this->y - cords[1];
-        this->z = this->z - cords[2];
+        this->x = this->x - vector.x;
+        this->y = this->y - vector.y;
+        this->z = this->z - vector.z;
     }
     
     std::vector<double> getCords() {
@@ -46,12 +45,6 @@ class dot3 {
         return cords;
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, dot3 dot);
-    friend double dist(dot3 dot_1, dot3 dot_2);
-    friend vec3 toVector(dot3 start, dot3 end);
-
-    private:
-    double x, y, z;
 };
 
 std::ostream& operator<<(std::ostream& stream, dot3 dot) {
