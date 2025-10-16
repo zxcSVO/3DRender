@@ -31,6 +31,10 @@ class vec3 {
     vec3 operator*(double coef) {
         return vec3(this->x * coef, this->y * coef, this->z * coef);
     }
+    
+    vec3 operator*(matrix3 basis) {
+        return vec3();
+    }
 
     void operator*=(double coef) {
         *this = *this * coef;
@@ -85,7 +89,7 @@ class vec3 {
     friend vec3 vectorMult(vec3 vector1, vec3 vector2);
 
     private:
-    int x, y, z;
+    double x, y, z;
 };
 
 std::ostream& operator<< (std::ostream& stream, const vec3& vec) {

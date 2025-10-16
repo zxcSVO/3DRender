@@ -7,13 +7,9 @@ class polygon {
         this->d2 = d2;
         this->d3 = d3;
     }
+    
     vec3 normal() {
         return (-vectorMult(this->d2 - this->d1, this->d3 - this->d1)).normalize();
-    }
-    int test() {
-
-
-        
     }
 
     friend std::ostream& operator<<(std::ostream& stream, polygon pol);
