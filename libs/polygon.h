@@ -10,6 +10,11 @@ class polygon {
     vec3 normal() {
         return (-vectorMult(this->d2 - this->d1, this->d3 - this->d1)).normalize();
     }
+    int test() {
+
+
+        
+    }
 
     friend std::ostream& operator<<(std::ostream& stream, polygon pol);
 
