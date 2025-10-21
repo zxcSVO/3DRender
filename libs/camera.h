@@ -1,5 +1,7 @@
 #include"commonLibs.h"
 
+class polygon;
+
 class camera {
     public:
 
@@ -15,10 +17,17 @@ class camera {
         this->position = vec3(x, y, z);
     }
 
-    vec3 convertToCamera(vec3 dot) { // Преобразование координат точки в координаты относительно камеры
+    //Преобразование глобальных координат в относительные координаты камеры
+    vec3 convertToCamera(vec3 dot) {
         return this->basis * vec3(dot.x - this->position.x, dot.y - this->position.y, dot.z - this->position.z);
-        // добавить преобразование поворота
     }
+    
+    polygon convertToCamera(polygon& pol) {
+        return polygon(this->convertToCamera(pol.d1), this->convertToCamera(pol.d2), this->convertToCamera(pol.d3));
+    }
+
+
+
     vec3 getDirection() {
         return this->basis.yVec;
     }

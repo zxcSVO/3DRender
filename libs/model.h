@@ -10,10 +10,27 @@ class model {
         this->polygons = polygons;
         this->origin = origin;
     }
+    
 
     vec3 convertToGlobal(vec3 dot) {
         return this->origin + dot;
     }
+
+    polygon convertToGlobal(polygon pol) {
+        return polygon(this->convertToGlobal(pol.d1), this->convertToGlobal(pol.d2), this->convertToGlobal(pol.d3));
+    }
+
+    //Возвращает массив полигонов для отрисовки, координаты относительно камеры
+    std::vector<polygon> toDraw(camera cam) {
+        std::vector<polygon> toDraw;
+        for (polygon pol:polygons) {
+            if (pol.isDraw(cam)) {
+                toDraw.push_back(cam.convertToCamera(this->convertToGlobal(pol)));
+            }
+        }
+        return toDraw;
+    }
+
 //добавить преобрзовани всех точек и полигонов в глобальные кординаты и обратно.
 
 };

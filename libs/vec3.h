@@ -36,12 +36,6 @@ class vec3 {
         return vec3(this->x * coef, this->y * coef, this->z * coef);
     }
     
-    // vec3 operator*(matrix3 basis) {
-    //     return vec3(this->x * basis.xVec.x + this->y * basis.yVec.x + this->z * basis.zVec.x, 
-    //                 this->x * basis.xVec.y + this->y * basis.yVec.y + this->z * basis.zVec.y,
-    //                 this->x * basis.xVec.z + this->y * basis.yVec.z + this->z * basis.zVec.z);
-    // }
-
     void operator*=(double coef) {
         *this = *this * coef;
     }
@@ -61,7 +55,7 @@ class vec3 {
     }
 
     vec3 operator-() {
-        return vec3(-this->x, -this->y, -this->z);
+        return vec3((-this->x), (-this->y), (-this->z));
     }
     
     vec3 operator-(const vec3 other_vector) {
@@ -79,9 +73,6 @@ class vec3 {
         return *this / this->lenth();
     }
 
-    double scalarMult(const vec3 other_vector) {
-        return (this->x * other_vector.x) + (this->y * other_vector.y) + (this->z * other_vector.z);
-    }
 
     std::vector<double> getCords() {
         std::vector<double> cords;
@@ -103,3 +94,6 @@ vec3 vectorMult(vec3 vector1, vec3 vector2) {
     return vec3(vector1.y * vector2.z - vector1.z * vector2.y, vector1.z * vector2.x - vector1.x * vector2.z, vector1.x * vector2.y - vector1.y * vector2.x);
 }
 
+double scalarMult(const vec3 vector1, const vec3 vector2) {
+        return (vector1.x * vector2.x) + (vector1.y * vector2.y) + (vector1.z * vector2.z);
+    }

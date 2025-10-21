@@ -3,17 +3,20 @@
 class polygon {
     public:
     
-    vec3 d1, d2, d3, normal;
+    static vec3 d1, d2, d3;
     
     polygon(vec3 d1, vec3 d2, vec3 d3) {
         this->d1 = d1;
         this->d2 = d2;
         this->d3 = d3;
-        this->normal = (-vectorMult(this->d2 - this->d1, this->d3 - this->d1)).normalize();
     }
     
     vec3 normal() {
-        return this->normal;   
+        return (-vectorMult(this->d2 - this->d1, this->d3 - this->d1)).normalize();   
+    }
+
+    bool isDraw(camera cam) {
+        return scalarMult(this->normal(), cam.basis.yVec) < 0;
     }
 
     friend std::ostream& operator<<(std::ostream& stream, polygon pol);
