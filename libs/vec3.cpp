@@ -1,6 +1,5 @@
 #pragma once
 
-#include"commonLibs.h"
 #include"vec3.h"
 
 

@@ -1,4 +1,9 @@
+#pragma once
+
 #include"commonLibs.h"
+#include"vec3.h"
+#include"polygon.h"
+
 
 class model {
     public: 
@@ -6,30 +11,15 @@ class model {
     std::vector<polygon> polygons;
     vec3 origin;
 
-    model(vec3 origin, std::vector<polygon> polygons) {
-        this->polygons = polygons;
-        this->origin = origin;
-    }
+    model(vec3 origin, std::vector<polygon> polygons);
     
 
-    vec3 convertToGlobal(vec3 dot) {
-        return this->origin + dot;
-    }
+    vec3 convertToGlobal(vec3 dot);
 
-    polygon convertToGlobal(polygon pol) {
-        return polygon(this->convertToGlobal(pol.d1), this->convertToGlobal(pol.d2), this->convertToGlobal(pol.d3));
-    }
+    polygon convertToGlobal(polygon pol);
 
     //Возвращает массив полигонов для отрисовки, координаты относительно камеры
-    std::vector<polygon> toDraw(camera cam) {
-        std::vector<polygon> toDraw;
-        for (polygon pol:polygons) {
-            if (pol.isDraw(cam)) {
-                toDraw.push_back(cam.convertToCamera(this->convertToGlobal(pol)));
-            }
-        }
-        return toDraw;
-    }
+    std::vector<polygon> toDraw(camera cam);
 
 //добавить преобрзовани всех точек и полигонов в глобальные кординаты и обратно.
 

@@ -1,8 +1,7 @@
 #pragma once
 
+#include"commonLibs.h"
 #include"vec3.h"
-
-// class vec3;
 
 
 class matrix3 {

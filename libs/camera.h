@@ -1,4 +1,6 @@
 #pragma once
+
+#include"commonLibs.h"
 #include"vec3.h"
 #include"polygon.h"
 #include"matrix3.h"

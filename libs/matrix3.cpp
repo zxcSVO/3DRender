@@ -1,6 +1,5 @@
 #pragma once
 
-#include"commonLibs.h"
 #include"matrix3.h"
 
 
