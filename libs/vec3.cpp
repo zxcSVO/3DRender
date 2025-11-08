@@ -34,6 +34,12 @@ vec3 vec3::operator*(double coef) {
     return vec3(this->x * coef, this->y * coef, this->z * coef);
 }
 
+// vec3 vec3::operator*(matrix3 mt){
+//     return vec3(this->x * mt.xVec.x + this->y * mt.yVec.x + this->z * mt.zVec.x,
+//                 this->x * mt.xVec.y + this->y * mt.yVec.y + this->z * mt.zVec.y,
+//                 this->x * mt.xVec.z + this->y * mt.yVec.z + this->z * mt.zVec.z);
+// }
+
 void vec3::operator*=(double coef) {
     *this = *this * coef;
 }
@@ -79,6 +85,21 @@ std::vector<double> vec3::getCords() {
     cords.push_back(this->z);
     return cords;
 }
+
+// void vec3::rotateXY(double angle) {
+//     matrix3 mt = getRotationMatrixXY(angle);
+//     *this = *this * mt;
+// }
+
+// void vec3::rotateYZ(double angle) {
+//     matrix3 mt = getRotationMatrixYZ(angle);
+//     *this = *this * mt;
+// }
+
+// void vec3::rotateXZ(double angle) {
+//     matrix3 mt = getRotationMatrixXZ(angle);
+//     *this = *this * mt;
+// }
 
 std::ostream& operator<< (std::ostream& stream, const vec3& vec) {
     stream << vec.x << ' ' << vec.y << ' ' << vec.z;

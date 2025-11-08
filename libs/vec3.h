@@ -1,6 +1,7 @@
 #pragma once
 
 #include"commonLibs.h"
+#include"matrix3.h"
 
 
 class vec3 {
@@ -15,6 +16,7 @@ class vec3 {
     bool operator==(double len);
     vec3 operator/(double coef);
     vec3 operator*(double coef);
+    // vec3 operator*(matrix3 mt);
     void operator*=(double coef);
     void operator/=(double coef);
     vec3 operator+(const vec3 other_vector);
@@ -24,6 +26,9 @@ class vec3 {
     void operator-=(const vec3 other_vector);
     vec3 normalize();
     std::vector<double> getCords();
+    // void rotateXY(double angle);
+    // void rotateYZ(double angle);
+    // void rotateXZ(double angle);
     
 };
 

@@ -6,9 +6,6 @@
 #include"matrix3.h"
 
 
-class polygon;
-// class vec3;
-
 class camera {
     public:
 
