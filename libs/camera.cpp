@@ -22,6 +22,9 @@ polygon camera::convertToCamera(polygon pol) {
 vec3 camera::getDirection() {
     return this->basis.yVec;
 }
+bool camera::isDraw(polygon pol) {
+    return scalarMult(pol.normal(), this->basis.yVec) < 0;
+}
 
 
 std::ostream& operator<<(std::ostream& stream, camera cam) {

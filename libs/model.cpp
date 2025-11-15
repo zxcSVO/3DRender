@@ -19,7 +19,7 @@ polygon model::convertToGlobal(polygon pol) {
 std::vector<polygon> model::toDraw(camera cam) {
     std::vector<polygon> toDraw;
     for (polygon pol:polygons) {
-        if (pol.isDraw(cam)) {
+        if (cam.isDraw(pol)) {
             toDraw.push_back(cam.convertToCamera(this->convertToGlobal(pol)));
         }
     }

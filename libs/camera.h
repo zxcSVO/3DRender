@@ -2,7 +2,6 @@
 
 #include"commonLibs.h"
 #include"vec3.h"
-#include"polygon.h"
 #include"matrix3.h"
 
 
@@ -21,6 +20,7 @@ class camera {
     //Преобразование глобальных координат в относительные координаты камеры
     polygon convertToCamera(polygon pol);
     vec3 getDirection();
+    bool isDraw(polygon pol);
 
 };
 

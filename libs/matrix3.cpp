@@ -33,7 +33,7 @@ matrix3 getRotationMatrixYZ(float angle) {
     return mt;
 }
 
-matrix3 getRotationMatrixXY(float angle) {
+matrix3 getRotationMatrixXZ(float angle) {
     matrix3 mt{vec3(cos(angle), 0, -sin(angle)), 
                vec3(0, 1, 0),
                vec3(sin(angle), 0, cos(angle))};

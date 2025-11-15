@@ -3,6 +3,7 @@
 #include"commonLibs.h"
 #include"vec3.h"
 #include"polygon.h"
+#include"camera.h"
 
 
 class model {
