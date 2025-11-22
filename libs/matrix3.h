@@ -14,7 +14,6 @@ public:
     
     matrix3 (vec3 vector1, vec3 vector2, vec3 vector3);
 
-    vec3 operator*(vec3 v);
     polygon operator*(polygon pol);
 
 };

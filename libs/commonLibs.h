@@ -6,6 +6,8 @@
 #include<vector>
 #include<iostream>
 #include<math.h>
+#include<thread>
+#include<chrono>
 
 
 //defines

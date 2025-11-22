@@ -3,7 +3,7 @@
 #include"vec3.h"
 
 
-vec3::vec3(double x, double y, double z){
+vec3::vec3(float x, float y, float z){
     this->x = x;
     this->y = y;
     this->z = z;
@@ -15,31 +15,31 @@ vec3::vec3() {
     this->z = 0;
 }
 
-double vec3::lenth() {
+float vec3::lenth() {
     return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
 bool vec3::operator==(const vec3 other_vector){
     return this->x - other_vector.x < 0.000001 && this->y - other_vector.y < 0.000001 && this->z - other_vector.z < 0.000001;
 }
-bool vec3::operator==(double len) {
+bool vec3::operator==(float len) {
     return this->lenth() - len < 0.000001;
 }
 
-vec3 vec3::operator/(double coef) {
+vec3 vec3::operator/(float coef) {
     return vec3(this->x / coef, this->y / coef, this->z / coef);
 }
 
-vec3 vec3::operator*(double coef) {
+vec3 vec3::operator*(float coef) {
     return vec3(this->x * coef, this->y * coef, this->z * coef);
 }
 
 
-void vec3::operator*=(double coef) {
+void vec3::operator*=(float coef) {
     *this = *this * coef;
 }
 
-void vec3::operator/=(double coef) {
+void vec3::operator/=(float coef) {
     *this = *this / coef;
 }
 
@@ -73,14 +73,13 @@ vec3 vec3::normalize() {
 }
 
 
-std::vector<double> vec3::getCords() {
-    std::vector<double> cords;
+std::vector<float> vec3::getCords() {
+    std::vector<float> cords;
     cords.push_back(this->x);
     cords.push_back(this->y);
     cords.push_back(this->z);
     return cords;
 }
-
 
 std::ostream& operator<< (std::ostream& stream, const vec3& vec) {
     stream << vec.x << ' ' << vec.y << ' ' << vec.z;
@@ -91,7 +90,7 @@ vec3 vectorMult(vec3 vector1, vec3 vector2) {
     return vec3(vector1.y * vector2.z - vector1.z * vector2.y, vector1.z * vector2.x - vector1.x * vector2.z, vector1.x * vector2.y - vector1.y * vector2.x);
 }
 
-double scalarMult(const vec3 vector1, const vec3 vector2) {
+float scalarMult(const vec3 vector1, const vec3 vector2) {
     return (vector1.x * vector2.x) + (vector1.y * vector2.y) + (vector1.z * vector2.z);
 }
 

@@ -20,7 +20,11 @@ class model {
     polygon convertToGlobal(polygon pol);
 
     //Возвращает массив полигонов для отрисовки, координаты относительно камеры
-    std::vector<polygon> toDraw(camera cam);
+    std::vector<polygon> toDraw(camera cam, bool carcas);
+
+    void rotateXY(float angle);
+    void rotateYZ(float angle);
+    void rotateXZ(float angle);
 
 //добавить преобрзовани всех точек и полигонов в глобальные кординаты и обратно.
 

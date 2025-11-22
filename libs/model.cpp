@@ -16,14 +16,35 @@ polygon model::convertToGlobal(polygon pol) {
 }
 
 //Возвращает массив полигонов для отрисовки, координаты относительно камеры
-std::vector<polygon> model::toDraw(camera cam) {
+std::vector<polygon> model::toDraw(camera cam, bool carcas = false) {
     std::vector<polygon> toDraw;
     for (polygon pol:polygons) {
-        if (cam.isDraw(pol)) {
+        if (carcas || cam.isDraw(pol)) {
             toDraw.push_back(cam.convertToCamera(this->convertToGlobal(pol)));
         }
     }
     return toDraw;
+}
+
+void model::rotateXY(float angle) {
+    matrix3 mt = getRotationMatrixXY(angle);
+    for (auto& pol:this->polygons) {
+        pol = pol * mt;
+    }
+}
+
+void model::rotateYZ(float angle) {
+    matrix3 mt = getRotationMatrixYZ(angle);
+    for (auto& pol:this->polygons) {
+        pol = pol * mt;
+    }
+}
+
+void model::rotateXZ(float angle) {
+    matrix3 mt = getRotationMatrixXZ(angle);
+    for (auto& pol:this->polygons) {
+        pol = pol * mt;
+    }
 }
 
 //добавить преобрзовани всех точек и полигонов в глобальные кординаты и обратно.
