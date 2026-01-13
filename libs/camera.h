@@ -23,8 +23,8 @@ class camera {
     polygon convertToCamera(polygon pol);
     vec3 getDirection();
     bool isDraw(polygon pol);
-    void rotateX(float angle);
     void rotateY(float angle);
+    void rotateX(float angle, bool basic = true);
     std::vector<float> projection(vec3 v);    
 
 };

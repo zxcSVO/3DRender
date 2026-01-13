@@ -29,19 +29,52 @@ bool camera::isDraw(polygon pol) {
 }
 
 void camera::rotateY(float angle) {
-    rotateX(0);
+    this->rotateX(-this->xAngle, false);
+    matrix3 mt = getRotationMatrixYZ(angle);
+    if (this->yAngle + angle > M_PI / 2) {
+        this->yAngle = M_PI / 2;
+    } else if (this->yAngle + angle < -M_PI / 2) {
+        this->yAngle = -M_PI / 2;
+    } else {
+        this->basis = this->basis * mt;
+        this->yAngle += angle;
+    }
+    this->rotateX(this->xAngle, false);
 }
 
-void camera::rotateX(float angle) {
-    rotateY(0);
+void camera::rotateX(float angle, bool basic) {
+    if (basic) {
+        this->xAngle += angle;
+    }
+    std::cout << basic << ' ' << this->xAngle << std::endl;
+    matrix3 mt = getRotationMatrixXY(angle);
+    this->basis = this->basis * mt;
 }
+// void camera::rotateY(float angle, bool first) {
+//     matrix3 mt = getRotationMatrixYZ(angle);
+//     if (first) {
+//         if (this->yAngle + angle > M_PI / 2) {
+//             this->yAngle = M_PI / 2;
+//         } else if (this->yAngle + angle < -M_PI / 2) {
+//             this->yAngle = -M_PI / 2;
+//         } else {
+//             this->basis = this->basis * mt;
+//             this->yAngle += angle;
+//         }
+//     }
+// }
+
+// void camera::rotateX(float angle) {
+//     rotateY(-this->yAngle, false);
+//     matrix3 mt = getRotationMatrixXY(angle);
+//     this->basis = this->basis * mt;
+//     rotateY(this->yAngle, false);
+// }
 
 std::vector<float> camera::projection(vec3 v) {
     std::vector<float> res;
-    res.push_back(v.x / v.y * cos(M_PI / 3) / sin(M_PI / 3) * 960 + 960);
-    res.push_back(v.z / v.y * cos(atan(static_cast<double>(1200) / 1920 * tan(M_PI / 3))) / sin(atan(static_cast<double>(1200) / 1920 * tan(M_PI / 3))) * 600 + 600);
-    // res.push_back(v.x * 120 / v.y + 960);
-    // res.push_back(v.z * 120 / v.y + 600);
+    res.push_back(v.x / v.y * cos(fov / 2) / sin(fov / 2) * xRes / 2 + xRes / 2);
+    res.push_back(v.z / v.y * cos(atan(static_cast<double>(yRes) / xRes * tan(fov / 2))) / sin(atan(static_cast<double>(yRes) / xRes * tan(fov / 2))) * yRes / 2 + yRes / 2);
     return res;
 }
 

@@ -8,7 +8,11 @@
 #include<math.h>
 #include<thread>
 #include<chrono>
+#include<mutex>
+#include<atomic>
 
+//SFML libs
+#include<SFML/Graphics.hpp>
 
-//defines
-#define M_PI 3.1415
+//settings
+#include"settings.h"
