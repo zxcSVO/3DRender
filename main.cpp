@@ -1,9 +1,5 @@
 #include"libs/cppLibs.h"
 
-void changeHandle() {
-
-}
-
 int main()
 {
     camera cam;
@@ -79,8 +75,8 @@ int main()
                 window.draw(triangle);
             }
         }
-        // models[0].rotateXY(M_PI / 360);
-        // models[0].rotateXZ(M_PI / 360);
+        models[0].rotateXY(M_PI / 360);
+        models[0].rotateXZ(M_PI / 360);
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         cam.rotateX(static_cast<double>(mousePos.x - static_cast<int>(xRes / 2)) / 100);
         cam.rotateY(-static_cast<double>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
