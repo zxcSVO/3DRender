@@ -22,6 +22,7 @@ std::vector<polygon> polygon::clip(vec3 planeNormal, vec3 planePoint) {
     for (vec3 point:std::vector<vec3>{this->d1, this->d1, this->d1}) {
         if (dist(planeNormal, planePoint, point) > 0) {inside.push_back(point), insideCount++;}
         else {outside.push_back(point), outsideCount++;}
+        //добавить проверку количества точек внури/снаружи
     }
     
     
