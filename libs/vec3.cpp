@@ -20,10 +20,16 @@ float vec3::lenth() {
 }
 
 bool vec3::operator==(const vec3 other_vector){
-    return this->x - other_vector.x < 0.000001 && this->y - other_vector.y < 0.000001 && this->z - other_vector.z < 0.000001;
+    return this->x - other_vector.x < 0.0001 && this->y - other_vector.y < 0.0001 && this->z - other_vector.z < 0.0001;
 }
 bool vec3::operator==(float len) {
     return this->lenth() - len < 0.000001;
+}
+bool vec3::operator!=(const vec3 other_vector){
+    return !(this->x - other_vector.x < 0.0001 && this->y - other_vector.y < 0.0001 && this->z - other_vector.z < 0.0001);
+}
+bool vec3::operator!=(float len) {
+    return !(this->lenth() - len < 0.000001);
 }
 
 vec3 vec3::operator/(float coef) {

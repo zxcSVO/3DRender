@@ -14,6 +14,7 @@ public:
     
     polygon(vec3 d11, vec3 d12, vec3 d13);
     
+    void invert();
     vec3 normal();
     std::vector<polygon> clip(vec3 planeNormal, vec3 planePoint);
 

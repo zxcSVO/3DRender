@@ -12,6 +12,8 @@ class vec3 {
     float lenth();
     bool operator==(const vec3 vector);
     bool operator==(float len);
+    bool operator!=(const vec3 vector);
+    bool operator!=(float len);
     vec3 operator/(float coef);
     vec3 operator*(float coef);
     void operator*=(float coef);
