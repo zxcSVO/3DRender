@@ -15,6 +15,7 @@ int main()
                                                    polygon(vec3(-3, -3, 3), vec3(-3, 3, -3), vec3(-3, 3, 3)),
                                                    polygon(vec3(3, -3, 3), vec3(3, 3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(3, 3, 3), vec3(3, 3, -3), vec3(3, -3, -3))});
+    // std::vector<model> models{model(vec3(0, 10, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3))})};
     std::vector<model> models{model(vec3(0, 7, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(-3, -3, 3), vec3(3, -3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(-3, -3, 3), vec3(3, 3, 3), vec3(3, -3, 3)), 
@@ -27,8 +28,9 @@ int main()
                                                    polygon(vec3(-3, -3, 3), vec3(-3, 3, -3), vec3(-3, 3, 3)),
                                                    polygon(vec3(3, -3, 3), vec3(3, 3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(3, 3, 3), vec3(3, 3, -3), vec3(3, -3, -3))})};
+    bool sleep = false;
+    bool rotate = false;
     sf::ContextSettings settings;
-    std::cout << cam.xAngle << std::endl;
     settings.antiAliasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode({xRes, yRes}), "3D Render", sf::Style::Default, sf::State::Windowed, settings);
     window.setVerticalSyncEnabled(true);
@@ -51,6 +53,10 @@ int main()
                     cam.rotateY(M_PI / 90);
                 } if (keyPressed->scancode == sf::Keyboard::Scancode::S) {
                     cam.rotateY(-M_PI / 90);
+                } if (keyPressed->scancode == sf::Keyboard::Scancode::Space) {
+                    sleep = !sleep;
+                } if (keyPressed->scancode == sf::Keyboard::Scancode::R) {
+                    rotate = !rotate;
                 }
             }
         }
@@ -75,16 +81,34 @@ int main()
                 window.draw(triangle);
             }
         }
-        models[0].rotateXY(M_PI / 360);
-        models[0].rotateXZ(M_PI / 360);
+        if (rotate) {
+            models[0].rotateXY(M_PI / 360);
+            models[0].rotateXZ(M_PI / 360);
+        }
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         cam.rotateX(static_cast<double>(mousePos.x - static_cast<int>(xRes / 2)) / 100);
         cam.rotateY(-static_cast<double>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
         sf::Mouse::setPosition({xRes / 2, yRes / 2}, window);
         std::this_thread::sleep_for(std::chrono::milliseconds(25));
         window.display();
+        while (sleep) {
+            while (const std::optional event = window.pollEvent())
+            {
+            if (event->is<sf::Event::Closed>())
+                window.close();
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
+                    window.close();
+                    return 0;
+                } if (keyPressed->scancode == sf::Keyboard::Scancode::Space) {
+                    sleep = !sleep;
+                }
+            }
+            }
+        }
     }
     while (true){}
     return 0;
 }
 
+//Опять проблема с поворотом камеры

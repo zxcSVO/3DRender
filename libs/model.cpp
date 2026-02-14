@@ -20,7 +20,9 @@ std::vector<polygon> model::toDraw(camera cam, bool carcas = false) {
     std::vector<polygon> toDraw;
     for (polygon pol:polygons) {
         if ((carcas || cam.isDraw(pol))) {
-            toDraw.push_back(cam.convertToCamera(this->convertToGlobal(pol)));
+            for (auto clippedPol:cam.fullClip(cam.convertToCamera(this->convertToGlobal(pol)))) {
+                toDraw.push_back(clippedPol);
+            }
         }
     }
     return toDraw;
@@ -47,4 +49,3 @@ void model::rotateXZ(float angle) {
     }
 }
 
-//добавить преобрзовани всех точек и полигонов в глобальные кординаты и обратно.

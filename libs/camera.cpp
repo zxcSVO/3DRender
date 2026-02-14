@@ -4,12 +4,10 @@
 #include"matrixMult.h"
 
 
-camera::camera(vec3 position) {
+camera::camera(vec3 position, float fovX, float fovY) {
     this->position = position;
-}
-
-camera::camera(float x, float y, float z) {
-    this->position = vec3(x, y, z);
+    this->fovX = fovX;
+    this->fovY = fovY;
 }
 
 vec3 camera::convertToCamera(vec3 dot) {
@@ -46,35 +44,36 @@ void camera::rotateX(float angle, bool basic) {
     if (basic) {
         this->xAngle += angle;
     }
-    std::cout << basic << ' ' << this->xAngle << std::endl;
     matrix3 mt = getRotationMatrixXY(angle);
     this->basis = this->basis * mt;
 }
-// void camera::rotateY(float angle, bool first) {
-//     matrix3 mt = getRotationMatrixYZ(angle);
-//     if (first) {
-//         if (this->yAngle + angle > M_PI / 2) {
-//             this->yAngle = M_PI / 2;
-//         } else if (this->yAngle + angle < -M_PI / 2) {
-//             this->yAngle = -M_PI / 2;
-//         } else {
-//             this->basis = this->basis * mt;
-//             this->yAngle += angle;
-//         }
-//     }
-// }
-
-// void camera::rotateX(float angle) {
-//     rotateY(-this->yAngle, false);
-//     matrix3 mt = getRotationMatrixXY(angle);
-//     this->basis = this->basis * mt;
-//     rotateY(this->yAngle, false);
-// }
 
 std::vector<float> camera::projection(vec3 v) {
     std::vector<float> res;
-    res.push_back(v.x / v.y * cos(fov / 2) / sin(fov / 2) * xRes / 2 + xRes / 2);
-    res.push_back(v.z / v.y * cos(atan(static_cast<double>(yRes) / xRes * tan(fov / 2))) / sin(atan(static_cast<double>(yRes) / xRes * tan(fov / 2))) * yRes / 2 + yRes / 2);
+    res.push_back(v.x / v.y * cos(this->fovX / 2) / sin(this->fovX / 2) * xRes / 2 + xRes / 2);
+    res.push_back(v.z / v.y * cos(this->fovY / 2) / sin(this->fovY / 2) * yRes / 2 + yRes / 2);
+    // std::cout << this->fovX << std::endl << this->fovY << std::endl << atan(static_cast<double>(yRes) / xRes * tan(this->fovX / 2)) << std::endl << std::endl;
+    return res;
+}
+
+std::vector<polygon> camera::fullClip(polygon pol) {
+    std::vector<polygon> res, res2;
+    res = pol.clip(vec3(-cos(this->fovX / 2), sin(this->fovX / 2), 0), vec3(0, 0, 0));
+    res2.clear();
+    for (auto el:res) {
+        for(auto el2:el.clip(vec3(cos(this->fovX / 2), sin(this->fovX / 2), 0), vec3(0, 0, 0))) res2.push_back(el2); 
+    }
+    res = res2;
+    res2.clear();
+    for (auto el:res) {
+        for(auto el2:el.clip(vec3(0, sin(this->fovY / 2), cos(this->fovY / 2)), vec3(0, 0, 0))) res2.push_back(el2); 
+    }
+    res = res2;
+    res2.clear();
+    for (auto el:res) {
+        for(auto el2:el.clip(vec3(0, sin(this->fovY / 2), -cos(this->fovY / 2)), vec3(0, 0, 0))) res2.push_back(el2); 
+    }
+    res = res2;
     return res;
 }
 

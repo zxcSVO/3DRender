@@ -29,6 +29,12 @@ std::vector<polygon> polygon::clip(vec3 planeNormal, vec3 planePoint) {
         if (dist(planeNormal, planePoint, point) > 0) {inside.push_back(point), insideCount++;}
         else {outside.push_back(point), outsideCount++;}
     }
+    // std::cout << insideCount << ' ' << outsideCount << std::endl;
+    // std::cout << planeNormal << std::endl << planePoint << std::endl;
+    // std::cout << this->d1.y << ' ' << this->d2.y << ' ' << this->d3.y << std::endl;
+    // std::cout << dist(planeNormal, planePoint, this->d1) << ' ' << dist(planeNormal, planePoint, this->d2) << ' ' << dist(planeNormal, planePoint, this->d3) << std::endl << std::endl;
+    
+    
     if (insideCount == 0) return std::vector<polygon>{};
     else if (insideCount == 1){
         polygon resPol{inside[0], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0]), interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[1])};
