@@ -11,7 +11,7 @@ camera::camera(vec3 position, float fovX, float fovY) {
 }
 
 vec3 camera::convertToCamera(vec3 dot) {
-    return vec3(dot.x - this->position.x, dot.y - this->position.y, dot.z - this->position.z) * this->basis;
+    return vec3(dot.x - this->position.x, dot.y - this->position.y, dot.z - this->position.z) * this->basis.transpose();
 }
 
 polygon camera::convertToCamera(polygon pol) {
@@ -46,6 +46,18 @@ void camera::rotateX(float angle, bool basic) {
     }
     matrix3 mt = getRotationMatrixXY(angle);
     this->basis = this->basis * mt;
+}
+
+void camera::rotate(float angleX, float angleY) {
+    this->basis = matrix3(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
+    this->xAngle += angleX;
+    this->yAngle += angleY;
+    matrix3 rtX = getRotationMatrixXY(this->xAngle), rtY = getRotationMatrixYZ(this->yAngle);
+    this->basis = this->basis * rtY;
+    this->basis = this->basis * rtX;
+    // std::cout << this->basis.xVec << std::endl;
+    // std::cout << this->basis.yVec << std::endl;
+    // std::cout << this->basis.zVec << std::endl << std::endl;
 }
 
 std::vector<float> camera::projection(vec3 v) {

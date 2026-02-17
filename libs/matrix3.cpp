@@ -9,15 +9,20 @@ matrix3::matrix3 (vec3 vector1, vec3 vector2, vec3 vector3) {
     this->zVec = vector3;
 }
 
-// vec3 matrix3::operator*(vec3 v){
-//     return vec3(v.x * this->xVec.x + v.y * this->yVec.x + v.z * this->zVec.x,
-//                 v.x * this->xVec.y + v.y * this->yVec.y + v.z * this->zVec.y,
-//                 v.x * this->xVec.z + v.y * this->yVec.z + v.z * this->zVec.z);
-// }
+matrix3 matrix3::transpose() {
+    return matrix3(vec3(this->xVec.x, this->yVec.x, this->zVec.x), 
+                   vec3(this->xVec.y, this->yVec.y, this->zVec.y), 
+                   vec3(this->xVec.z, this->yVec.z, this->zVec.z));
+}
 
-// polygon matrix3::operator*(polygon pol){
-//     return polygon(pol.d1 * *this, pol.d2 * *this, pol.d3 * *this);
-// }
+float matrix3::determ() {
+    return this->xVec.x * this->yVec.y * this->zVec.z + this->xVec.y * this->yVec.z * this->zVec.x + this->xVec.z * this->yVec.x * this->zVec.y - this->xVec.z * this->yVec.y * this->zVec.x - this->xVec.y * this->yVec.x * this->zVec.z - this->xVec.x * this->yVec.z * this->zVec.y;
+}
+//Не ортнормированно и я не уверен что вобще работает
+matrix3 matrix3::invert() {
+    float det = this->determ();
+    return matrix3{this->xVec / det, this->yVec / det, this->zVec / det};
+}
 
 matrix3 getRotationMatrixXY(float angle) {
     matrix3 mt{vec3(cos(angle), sin(angle), 0), 

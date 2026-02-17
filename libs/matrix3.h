@@ -14,7 +14,9 @@ public:
     
     matrix3 (vec3 vector1, vec3 vector2, vec3 vector3);
 
-    polygon operator*(polygon pol);
+    matrix3 transpose();
+    float determ();
+    matrix3 invert();
 
 };
 

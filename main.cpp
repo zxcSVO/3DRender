@@ -15,8 +15,22 @@ int main()
                                                    polygon(vec3(-3, -3, 3), vec3(-3, 3, -3), vec3(-3, 3, 3)),
                                                    polygon(vec3(3, -3, 3), vec3(3, 3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(3, 3, 3), vec3(3, 3, -3), vec3(3, -3, -3))});
-    // std::vector<model> models{model(vec3(0, 10, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3))})};
+    // std::vector<model> models{model(vec3(0, 10, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3))}),
+    //                           model(vec3(0, -10, 0), std::vector<polygon>{polygon(vec3(-3, 3, -3), vec3(-3, 3, 3), vec3(3, 3, -3))}),
+    //                           model(vec3(-10, 0, 0), std::vector<polygon>{polygon(vec3(3, -3, -3), vec3(3, -3, 3), vec3(3, 3, -3))})};
     std::vector<model> models{model(vec3(0, 7, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3)),
+                                                   polygon(vec3(-3, -3, 3), vec3(3, -3, 3), vec3(3, -3, -3)),
+                                                   polygon(vec3(-3, -3, 3), vec3(3, 3, 3), vec3(3, -3, 3)), 
+                                                   polygon(vec3(-3, -3, 3), vec3(-3, 3, 3), vec3(3, 3, 3)), 
+                                                   polygon(vec3(-3, 3, 3), vec3(-3, 3, -3), vec3(3, 3, 3)),
+                                                   polygon(vec3(3, 3, -3), vec3(3, 3, 3), vec3(-3, 3, -3)), 
+                                                   polygon(vec3(-3, 3, -3), vec3(-3, -3, -3), vec3(3, 3, -3)),
+                                                   polygon(vec3(-3, -3, -3), vec3(3, -3, -3), vec3(3, 3, -3)),
+                                                   polygon(vec3(-3, -3, -3), vec3(-3, 3, -3), vec3(-3, -3, 3)),
+                                                   polygon(vec3(-3, -3, 3), vec3(-3, 3, -3), vec3(-3, 3, 3)),
+                                                   polygon(vec3(3, -3, 3), vec3(3, 3, 3), vec3(3, -3, -3)),
+                                                   polygon(vec3(3, 3, 3), vec3(3, 3, -3), vec3(3, -3, -3))}),
+                              model(vec3(0, -7, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(-3, -3, 3), vec3(3, -3, 3), vec3(3, -3, -3)),
                                                    polygon(vec3(-3, -3, 3), vec3(3, 3, 3), vec3(3, -3, 3)), 
                                                    polygon(vec3(-3, -3, 3), vec3(-3, 3, 3), vec3(3, 3, 3)), 
@@ -35,6 +49,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode({xRes, yRes}), "3D Render", sf::Style::Default, sf::State::Windowed, settings);
     window.setVerticalSyncEnabled(true);
     sf::Mouse::setPosition({xRes / 2, yRes / 2}, window);
+    window.pollEvent();
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
@@ -45,25 +60,24 @@ int main()
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
                     window.close();
                     return 0;
-                } if (keyPressed->scancode == sf::Keyboard::Scancode::A) {
-                    cam.rotateX(-M_PI / 90);
-                } if (keyPressed->scancode == sf::Keyboard::Scancode::D) {
-                    cam.rotateX(M_PI / 90);
-                } if (keyPressed->scancode == sf::Keyboard::Scancode::W) {
-                    cam.rotateY(M_PI / 90);
-                } if (keyPressed->scancode == sf::Keyboard::Scancode::S) {
-                    cam.rotateY(-M_PI / 90);
-                } if (keyPressed->scancode == sf::Keyboard::Scancode::Space) {
-                    sleep = !sleep;
                 } if (keyPressed->scancode == sf::Keyboard::Scancode::R) {
                     rotate = !rotate;
                 }
             }
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) cam.position -= cam.basis.xVec;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) cam.position += cam.basis.xVec;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) cam.position += cam.basis.yVec;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) cam.position -= cam.basis.yVec;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) cam.position.z -= 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) cam.position.z += 1;
         window.clear();
         for (model mdl:models) {
             for (auto pol:mdl.toDraw(cam, true)) {
+
+                // std::cout << pol.d2 << std::endl << std::endl;
+
                 std::vector<float> d1Proj = cam.projection(pol.d1);
                 std::vector<float> d2Proj = cam.projection(pol.d2);
                 std::vector<float> d3Proj = cam.projection(pol.d3);        
@@ -86,8 +100,9 @@ int main()
             models[0].rotateXZ(M_PI / 360);
         }
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        cam.rotateX(static_cast<double>(mousePos.x - static_cast<int>(xRes / 2)) / 100);
-        cam.rotateY(-static_cast<double>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
+        // cam.rotateX(static_cast<double>(mousePos.x - static_cast<int>(xRes / 2)) / 100);
+        // cam.rotateY(-static_cast<double>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
+        cam.rotate(-static_cast<float>(mousePos.x - static_cast<int>(xRes / 2)) / 100, static_cast<float>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
         sf::Mouse::setPosition({xRes / 2, yRes / 2}, window);
         std::this_thread::sleep_for(std::chrono::milliseconds(25));
         window.display();
@@ -111,4 +126,3 @@ int main()
     return 0;
 }
 
-//Опять проблема с поворотом камеры

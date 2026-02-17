@@ -25,6 +25,7 @@ class camera {
     bool isDraw(polygon pol);
     void rotateY(float angle);
     void rotateX(float angle, bool basic = true);
+    void rotate(float angleX, float angleY);
     std::vector<float> projection(vec3 v);
     std::vector<polygon> fullClip(polygon pol);
 
