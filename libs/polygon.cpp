@@ -3,10 +3,11 @@
 #include"polygon.h"
 
 
-polygon::polygon(vec3 d11, vec3 d12, vec3 d13) {
+polygon::polygon(vec3 d11, vec3 d12, vec3 d13, sf::Color color) {
     this->d1 = d11;
     this->d2 = d12;
     this->d3 = d13;
+    this->color = color;
 }
 
 void polygon::invert() {
@@ -37,17 +38,21 @@ std::vector<polygon> polygon::clip(vec3 planeNormal, vec3 planePoint) {
     
     if (insideCount == 0) return std::vector<polygon>{};
     else if (insideCount == 1){
-        polygon resPol{inside[0], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0]), interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[1])};
+        polygon resPol{inside[0], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0]), interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[1]), this->color};
         if (resPol.normal() != norm) resPol.invert();
         return std::vector<polygon>{resPol};
     } else if (insideCount == 2){
-        polygon resPol1{inside[0], inside[1], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0])}, resPol2{inside[1], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0]), interrsectPlaneLine(planePoint, planeNormal, inside[1], outside[0])};
+        polygon resPol1{inside[0], inside[1], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0])}, resPol2{inside[1], interrsectPlaneLine(planePoint, planeNormal, inside[0], outside[0]), interrsectPlaneLine(planePoint, planeNormal, inside[1], outside[0]), this->color};
         if (resPol1.normal() != norm) resPol1.invert();
         if (resPol2.normal() != norm) resPol2.invert();
         return std::vector<polygon>{resPol1, resPol2};
     } else {
         return std::vector<polygon>{*this};
     }
+}
+
+vec3 polygon::middle() {
+    return (this->d1 + this->d2 + this->d3) / 3;
 }
 
 std::ostream& operator<<(std::ostream& stream, polygon pol) {

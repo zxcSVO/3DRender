@@ -14,8 +14,12 @@ vec3 camera::convertToCamera(vec3 dot) {
     return vec3(dot.x - this->position.x, dot.y - this->position.y, dot.z - this->position.z) * this->basis.transpose();
 }
 
+vec3 camera::convertToCameraRotation(vec3 dot) {
+    return vec3(dot.x, dot.y, dot.z) * this->basis.transpose();
+}
+
 polygon camera::convertToCamera(polygon pol) {
-    return polygon(this->convertToCamera(pol.d1), this->convertToCamera(pol.d2), this->convertToCamera(pol.d3));
+    return polygon(this->convertToCamera(pol.d1), this->convertToCamera(pol.d2), this->convertToCamera(pol.d3), pol.color);
 }
 
 vec3 camera::getDirection() {
@@ -23,7 +27,7 @@ vec3 camera::getDirection() {
 }
 
 bool camera::isDraw(polygon pol) {
-    return scalarMult(pol.normal(), this->basis.yVec) < 0;
+    return scalarMult(pol.normal(), this->position - pol.middle()) > 0;
 }
 
 void camera::rotateY(float angle) {

@@ -19,6 +19,7 @@ class camera {
 
     //Преобразование глобальных координат в относительные координаты камеры
     vec3 convertToCamera(vec3 dot);
+    vec3 convertToCameraRotation(vec3 dot);
     //Преобразование глобальных координат в относительные координаты камеры
     polygon convertToCamera(polygon pol);
     vec3 getDirection();

@@ -12,14 +12,14 @@ vec3 model::convertToGlobal(vec3 dot) {
 }
 
 polygon model::convertToGlobal(polygon pol) {
-    return polygon(this->convertToGlobal(pol.d1), this->convertToGlobal(pol.d2), this->convertToGlobal(pol.d3));
+    return polygon(this->convertToGlobal(pol.d1), this->convertToGlobal(pol.d2), this->convertToGlobal(pol.d3), pol.color);
 }
 
 //Возвращает массив полигонов для отрисовки, координаты относительно камеры
 std::vector<polygon> model::toDraw(camera cam, bool carcas = false) {
     std::vector<polygon> toDraw;
-    for (polygon pol:polygons) {
-        if ((carcas || cam.isDraw(pol))) {
+    for (polygon pol:this->polygons) {
+        if ((carcas || cam.isDraw(this->convertToGlobal(pol)))) {
             for (auto clippedPol:cam.fullClip(cam.convertToCamera(this->convertToGlobal(pol)))) {
                 toDraw.push_back(clippedPol);
             }
