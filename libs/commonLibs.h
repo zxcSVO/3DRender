@@ -11,6 +11,7 @@
 #include<chrono>
 #include<mutex>
 #include<atomic>
+#include<fstream>
 
 //SFML libs
 #include<SFML/Graphics.hpp>
