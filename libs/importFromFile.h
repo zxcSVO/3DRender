@@ -5,6 +5,6 @@
 #include"polygon.h"
 #include"model.h"
 
-std::vector<int> splitFace(std::string& face);
+std::vector<int> splitFace(std::string&);
 
-model importFromFile(std::ifstream input);
+model importFromFile(std::ifstream);

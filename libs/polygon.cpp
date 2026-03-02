@@ -3,11 +3,15 @@
 #include"polygon.h"
 
 
-polygon::polygon(vec3 d11, vec3 d12, vec3 d13, sf::Color color) {
+polygon::polygon(const vec3& d11, const vec3& d12, const vec3& d13, const sf::Color& color) {
     this->d1 = d11;
     this->d2 = d12;
     this->d3 = d13;
     this->color = color;
+}
+
+polygon::polygon(const vec3& d11, const vec3& d12, const vec3& d13) : polygon(d11, d12, d13, sf::Color(87, 245, 66))
+{
 }
 
 void polygon::invert() {
@@ -16,12 +20,12 @@ void polygon::invert() {
     this->d2 = tmp;
 }
 
-vec3 polygon::normal() {
+vec3 polygon::normal() const {
     return (-vectorMult(this->d2 - this->d1, this->d3 - this->d1)).normalize();   
 }
 
 
-std::vector<polygon> polygon::clip(vec3 planeNormal, vec3 planePoint) {
+std::vector<polygon> polygon::clip(const vec3& planeNormal, const vec3& planePoint) const {
     vec3 norm = this->normal();
     std::vector<polygon> result;
     std::vector<vec3> inside; int insideCount = 0;
@@ -51,7 +55,7 @@ std::vector<polygon> polygon::clip(vec3 planeNormal, vec3 planePoint) {
     }
 }
 
-vec3 polygon::middle() {
+vec3 polygon::middle() const {
     return (this->d1 + this->d2 + this->d3) / 3;
 }
 

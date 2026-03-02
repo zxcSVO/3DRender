@@ -3,6 +3,6 @@
 #include"commonLibs.h"
 #include"vec3.h"
 
-vec3 interrsectPlaneLine(vec3 planeDot, vec3 planeNormal, vec3 lineStart, vec3 lineEnd);
-float dist(vec3 planeNormal, vec3 planePoint, vec3 point);
+vec3 interrsectPlaneLine(const vec3&, const vec3&, const vec3&, const vec3&);
+float dist(const vec3&, const vec3&, const vec3&);
 

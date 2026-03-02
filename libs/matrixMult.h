@@ -6,6 +6,6 @@
 #include"vec3.h"
 #include"polygon.h"
 
-vec3 operator*(vec3 v, matrix3 mt);
-polygon operator*(polygon pol, matrix3 mt);
-matrix3 operator*(matrix3 mt1, matrix3 mt2);
+vec3 operator*(const vec3&, const matrix3&);
+polygon operator*(const polygon&, const matrix3&);
+matrix3 operator*(const matrix3&, const matrix3&);

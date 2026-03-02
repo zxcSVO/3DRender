@@ -15,22 +15,19 @@ class camera {
     float xAngle = 0, yAngle = 0;
     float fovX, fovY;
 
-    camera(vec3 position = vec3(0, 0, 0), float fovX = M_PI * 2 / 3, float fovY = 2 * atan(static_cast<double>(yRes) / xRes * tan(M_PI / 3)));
+    camera(vec3, float, float);
 
     //Преобразование глобальных координат в относительные координаты камеры
-    vec3 convertToCamera(vec3 dot);
-    vec3 convertToCameraRotation(vec3 dot);
+    vec3 convertToCamera(const vec3&);
+    vec3 convertToCameraRotation(const vec3&);
     //Преобразование глобальных координат в относительные координаты камеры
-    polygon convertToCamera(polygon pol);
-    vec3 getDirection();
-    bool isDraw(polygon pol);
-    void rotateY(float angle);
-    void rotateX(float angle, bool basic = true);
-    void rotate(float angleX, float angleY);
-    std::vector<float> projection(vec3 v);
-    std::vector<polygon> fullClip(polygon pol);
+    polygon convertToCamera(const polygon&);
+    bool isDraw(const polygon&);
+    void rotate(const float&, const float&);
+    std::vector<float> projection(const vec3&);
+    std::vector<polygon> fullClip(const polygon&);
 
 };
 
 
-std::ostream& operator<<(std::ostream& stream, camera cam);
+std::ostream& operator<<(std::ostream&, camera);

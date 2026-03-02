@@ -2,18 +2,18 @@
 
 #include"helpFuncs.h"
 
-vec3 interrsectPlaneLine(vec3 planeDot, vec3 planeNormal, vec3 lineStart, vec3 lineEnd) {
-    planeNormal = planeNormal.normalize();
-    float planeD = -scalarMult(planeNormal, planeDot);
-    float ad = scalarMult(planeNormal, lineStart);
-    float bd = scalarMult(planeNormal, lineEnd);
+vec3 interrsectPlaneLine(const vec3& planeDot, const vec3& planeNormal, const vec3& lineStart, const vec3& lineEnd) {
+    vec3 planeNormalized = planeNormal.normalize();
+    float planeD = -scalarMult(planeNormalized, planeDot);
+    float ad = scalarMult(planeNormalized, lineStart);
+    float bd = scalarMult(planeNormalized, lineEnd);
     float t = (-planeD - ad) / (bd - ad);
     vec3 vecStartToEnd = lineEnd - lineStart;
     vec3 vecIntersect = vecStartToEnd * t;
-    return lineStart + vecIntersect; 
+    return lineStart + vecIntersect;
 }
 
-float dist(vec3 planeNormal, vec3 planePoint, vec3 point){
-    planeNormal = planeNormal.normalize();
-    return scalarMult(planeNormal, point - planePoint);
+float dist(const vec3& planeNormal, const vec3& planePoint, const vec3& point){
+    vec3 planeNormalized = planeNormal.normalize();
+    return scalarMult(planeNormalized, point - planePoint);
 }

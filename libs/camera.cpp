@@ -4,55 +4,29 @@
 #include"matrixMult.h"
 
 
-camera::camera(vec3 position, float fovX, float fovY) {
+camera::camera(vec3 position = vec3(0, 0, 0), float fovX = M_PI * 2 / 3, float fovY = 2 * atan(static_cast<double>(yRes) / xRes * tan(M_PI / 3))) {
     this->position = position;
     this->fovX = fovX;
     this->fovY = fovY;
 }
 
-vec3 camera::convertToCamera(vec3 dot) {
+vec3 camera::convertToCamera(const vec3& dot) {
     return vec3(dot.x - this->position.x, dot.y - this->position.y, dot.z - this->position.z) * this->basis.transpose();
 }
 
-vec3 camera::convertToCameraRotation(vec3 dot) {
+vec3 camera::convertToCameraRotation(const vec3& dot) {
     return vec3(dot.x, dot.y, dot.z) * this->basis.transpose();
 }
 
-polygon camera::convertToCamera(polygon pol) {
+polygon camera::convertToCamera(const polygon& pol) {
     return polygon(this->convertToCamera(pol.d1), this->convertToCamera(pol.d2), this->convertToCamera(pol.d3), pol.color);
 }
 
-vec3 camera::getDirection() {
-    return this->basis.yVec;
-}
-
-bool camera::isDraw(polygon pol) {
+bool camera::isDraw(const polygon& pol) {
     return scalarMult(pol.normal(), this->position - pol.middle()) > 0;
 }
 
-void camera::rotateY(float angle) {
-    this->rotateX(-this->xAngle, false);
-    matrix3 mt = getRotationMatrixYZ(angle);
-    if (this->yAngle + angle > M_PI / 2) {
-        this->yAngle = M_PI / 2;
-    } else if (this->yAngle + angle < -M_PI / 2) {
-        this->yAngle = -M_PI / 2;
-    } else {
-        this->basis = this->basis * mt;
-        this->yAngle += angle;
-    }
-    this->rotateX(this->xAngle, false);
-}
-
-void camera::rotateX(float angle, bool basic) {
-    if (basic) {
-        this->xAngle += angle;
-    }
-    matrix3 mt = getRotationMatrixXY(angle);
-    this->basis = this->basis * mt;
-}
-
-void camera::rotate(float angleX, float angleY) {
+void camera::rotate(const float& angleX, const float& angleY) {
     this->basis = matrix3(vec3(1, 0, 0), vec3(0, 1, 0), vec3(0, 0, 1));
     this->xAngle += angleX;
     this->yAngle += angleY;
@@ -64,15 +38,15 @@ void camera::rotate(float angleX, float angleY) {
     // std::cout << this->basis.zVec << std::endl << std::endl;
 }
 
-std::vector<float> camera::projection(vec3 v) {
+std::vector<float> camera::projection(const vec3& v) {
     std::vector<float> res;
     res.push_back(v.x / v.y * cos(this->fovX / 2) / sin(this->fovX / 2) * xRes / 2 + xRes / 2);
-    res.push_back(v.z / v.y * cos(this->fovY / 2) / sin(this->fovY / 2) * yRes / 2 + yRes / 2);
+    res.push_back(-v.z / v.y * cos(this->fovY / 2) / sin(this->fovY / 2) * yRes / 2 + yRes / 2);
     // std::cout << this->fovX << std::endl << this->fovY << std::endl << atan(static_cast<double>(yRes) / xRes * tan(this->fovX / 2)) << std::endl << std::endl;
     return res;
 }
 
-std::vector<polygon> camera::fullClip(polygon pol) {
+std::vector<polygon> camera::fullClip(const polygon& pol) {
     std::vector<polygon> res, res2;
     res = pol.clip(vec3(-cos(this->fovX / 2), sin(this->fovX / 2), 0), vec3(0, 0, 0));
     res2.clear();

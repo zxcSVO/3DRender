@@ -45,7 +45,8 @@ int main()
     //                                                polygon(vec3(3, -3, 3), vec3(3, 3, 3), vec3(3, -3, -3)),
     //                                                polygon(vec3(3, 3, 3), vec3(3, 3, -3), vec3(3, -3, -3))})};
     std::vector<model> models;
-    models.push_back(importFromFile(std::ifstream("cube.obj")));
+    models.push_back(importFromFile(std::ifstream("human.obj")));
+    // models[0].rotateXZ(M_PI);
     bool sleep = false;
     bool rotate = false;
     bool outline = true;
@@ -80,8 +81,8 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) cam.position += cam.basis.xVec;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) cam.position += cam.basis.yVec;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) cam.position -= cam.basis.yVec;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) cam.position.z -= 1;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) cam.position.z += 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) cam.position.z += 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) cam.position.z -= 1;
         window.clear(sf::Color::White);
         drawBuffer.clear();
         for (model mdl:models) {
@@ -133,9 +134,7 @@ int main()
             models[0].rotateXZ(M_PI / 360);
         }
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-        // cam.rotateX(static_cast<double>(mousePos.x - static_cast<int>(xRes / 2)) / 100);
-        // cam.rotateY(-static_cast<double>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
-        cam.rotate(-static_cast<float>(mousePos.x - static_cast<int>(xRes / 2)) / 100, static_cast<float>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
+        cam.rotate(-static_cast<float>(mousePos.x - static_cast<int>(xRes / 2)) / 100, -static_cast<float>(mousePos.y - static_cast<int>(yRes / 2)) / 100);
         sf::Mouse::setPosition({xRes / 2, yRes / 2}, window);
         std::this_thread::sleep_for(std::chrono::milliseconds(25));
         window.display();

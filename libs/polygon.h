@@ -13,12 +13,13 @@ public:
     vec3 d3;
     sf::Color color;
     
-    polygon(vec3 d11, vec3 d12, vec3 d13, sf::Color color = sf::Color((uint8_t)87, (uint8_t)245, (uint8_t)66));
+    polygon(const vec3&, const vec3&, const vec3&, const sf::Color&);
+    polygon(const vec3&, const vec3&, const vec3&);
     
     void invert();
-    vec3 normal();
-    std::vector<polygon> clip(vec3 planeNormal, vec3 planePoint);
-    vec3 middle();
+    vec3 normal() const;
+    std::vector<polygon> clip(const vec3& planeNormal, const vec3& planePoint) const;
+    vec3 middle() const;
 
 };
 

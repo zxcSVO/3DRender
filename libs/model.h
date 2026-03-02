@@ -4,6 +4,7 @@
 #include"vec3.h"
 #include"polygon.h"
 #include"camera.h"
+#include"matrixMult.h"
 
 
 class model {
@@ -12,19 +13,19 @@ class model {
     std::vector<polygon> polygons;
     vec3 origin;
 
-    model(vec3 origin, std::vector<polygon> polygons);
+    model(vec3, std::vector<polygon>&);
     
 
-    vec3 convertToGlobal(vec3 dot);
+    vec3 convertToGlobal(vec3&) const;
 
-    polygon convertToGlobal(polygon pol);
+    polygon convertToGlobal(polygon&) const;
 
     //Возвращает массив полигонов для отрисовки, координаты относительно камеры
-    std::vector<polygon> toDraw(camera cam, bool carcas);
+    std::vector<polygon> toDraw(camera&, bool) const;
 
-    void rotateXY(float angle);
-    void rotateYZ(float angle);
-    void rotateXZ(float angle);
+    void rotateXY(const float&);
+    void rotateYZ(const float&);
+    void rotateXZ(const float&);
 
 //добавить преобрзовани всех точек и полигонов в глобальные кординаты и обратно.
 

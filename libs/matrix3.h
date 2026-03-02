@@ -12,15 +12,15 @@ public:
     vec3 yVec;
     vec3 zVec;
     
-    matrix3 (vec3 vector1, vec3 vector2, vec3 vector3);
+    matrix3 (vec3, vec3, vec3);
 
-    matrix3 transpose();
-    float determ();
-    matrix3 invert();
+    matrix3 transpose() const;
+    float determ() const;
+    matrix3 invert() const;
 
 };
 
 
-matrix3 getRotationMatrixXY(float angle);
-matrix3 getRotationMatrixYZ(float angle);
-matrix3 getRotationMatrixXZ(float angle);
+matrix3 getRotationMatrixXY(const float&);
+matrix3 getRotationMatrixYZ(const float&);
+matrix3 getRotationMatrixXZ(const float&);

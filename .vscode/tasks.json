@@ -8,6 +8,7 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
+				// "-v",
 				"${file}",
 				"-I\"C:/Users/zxcSVO/Desktop/3DRender/SFML-include\"",
 				"-o",
