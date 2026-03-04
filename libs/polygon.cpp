@@ -10,7 +10,7 @@ polygon::polygon(const vec3& d11, const vec3& d12, const vec3& d13, const sf::Co
     this->color = color;
 }
 
-polygon::polygon(const vec3& d11, const vec3& d12, const vec3& d13) : polygon(d11, d12, d13, sf::Color(87, 245, 66))
+polygon::polygon(const vec3& d11, const vec3& d12, const vec3& d13) : polygon(d11, d12, d13, sf::Color(124, 230, 84))
 {
 }
 

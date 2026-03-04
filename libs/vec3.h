@@ -10,10 +10,10 @@ class vec3 {
     vec3();
 
     float lenth() const;
-    bool operator==(const vec3&);
-    bool operator==(float&);
-    const bool operator!=(const vec3&);
-    bool operator!=(const float&);
+    bool operator==(const vec3&) const;
+    bool operator==(float&) const;
+    bool operator!=(const vec3&) const;
+    bool operator!=(const float&) const;
     vec3 operator/(const float&) const;
     vec3 operator*(const float&) const;
     void operator*=(const float&);
@@ -24,7 +24,6 @@ class vec3 {
     vec3 operator-(const vec3&) const;
     void operator-=(const vec3&);
     vec3 normalize() const;
-    std::vector<float> getCords() const;
 
 };
 

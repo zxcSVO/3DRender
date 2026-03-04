@@ -3,7 +3,7 @@
 #include"matrix3.h"
 
 
-matrix3::matrix3 (vec3 vector1, vec3 vector2, vec3 vector3) {
+matrix3::matrix3 (vec3 vector1 = vec3(1, 0, 0), vec3 vector2 = vec3(1, 0, 0), vec3 vector3 = vec3(1, 0, 0)) {
     this->xVec = vector1;
     this->yVec = vector2;
     this->zVec = vector3;

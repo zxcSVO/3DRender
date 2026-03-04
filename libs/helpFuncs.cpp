@@ -7,7 +7,7 @@ vec3 interrsectPlaneLine(const vec3& planeDot, const vec3& planeNormal, const ve
     float planeD = -scalarMult(planeNormalized, planeDot);
     float ad = scalarMult(planeNormalized, lineStart);
     float bd = scalarMult(planeNormalized, lineEnd);
-    float t = (-planeD - ad) / (bd - ad);
+    float t = (- ad) / (bd - ad);
     vec3 vecStartToEnd = lineEnd - lineStart;
     vec3 vecIntersect = vecStartToEnd * t;
     return lineStart + vecIntersect;

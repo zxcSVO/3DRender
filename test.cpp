@@ -1,11 +1,8 @@
 #include "libs/cppLibs.h"
 
 int main() {
-    matrix3 mt = getRotationMatrixXY(M_PI / 2);
-    polygon pol{vec3(1, 0, 1), vec3(1, 0, -1), vec3(-1, 0, 1)};
-    std::cout << pol << std::endl;
-    pol = pol * mt;
-    std::cout << pol << std::endl;
+    model test{vec3(0, 0, 0), std::vector<polygon>{polygon(vec3(1, 1, 0), vec3(0, 0, 0), vec3(vec3(1, 0, 0)))}};
+    
     while (1){}
     return 0;
 }

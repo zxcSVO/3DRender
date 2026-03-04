@@ -12,6 +12,7 @@ class model {
     
     std::vector<polygon> polygons;
     vec3 origin;
+    matrix3 basis = matrix3();
 
     model(vec3, std::vector<polygon>&);
     

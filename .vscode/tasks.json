@@ -6,6 +6,8 @@
 			"label": "C/C++: g++.exe build active file",
 			"command": "D:\\msys64\\mingw64\\bin\\g++.exe",
 			"args": [
+				// "-static-libstdc++",
+				// "-static-libgcc",
 				"-fdiagnostics-color=always",
 				"-g",
 				// "-v",

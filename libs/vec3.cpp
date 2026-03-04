@@ -19,16 +19,16 @@ float vec3::lenth() const {
     return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
-bool vec3::operator==(const vec3& other_vector){
+bool vec3::operator==(const vec3& other_vector) const {
     return this->x - other_vector.x < 0.0001 && this->y - other_vector.y < 0.0001 && this->z - other_vector.z < 0.0001;
 }
-bool vec3::operator==(float& len) {
+bool vec3::operator==(float& len) const {
     return this->lenth() - len < 0.000001;
 }
-const bool vec3::operator!=(const vec3& other_vector){
+bool vec3::operator!=(const vec3& other_vector) const {
     return !(this->x - other_vector.x < 0.0001 && this->y - other_vector.y < 0.0001 && this->z - other_vector.z < 0.0001);
 }
-bool vec3::operator!=(const float& len) {
+bool vec3::operator!=(const float& len) const {
     return !(this->lenth() - len < 0.000001);
 }
 
@@ -79,13 +79,6 @@ vec3 vec3::normalize() const {
 }
 
 
-std::vector<float> vec3::getCords() const {
-    std::vector<float> cords;
-    cords.push_back(this->x);
-    cords.push_back(this->y);
-    cords.push_back(this->z);
-    return cords;
-}
 
 std::ostream& operator<< (std::ostream& stream, const vec3& vec) {
     stream << vec.x << ' ' << vec.y << ' ' << vec.z;

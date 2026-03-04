@@ -2,6 +2,13 @@
 
 int main()
 {
+    // sf::Font font("minecraft.ttf");
+    // font.openFromFile("minecraft.ttf");
+    // sf::Text fpsText(font);
+    // sf::Clock fpsClock;
+    // int frameCount = 0;
+    // int fps = 0;
+
     camera cam;
     // model test(vec3(0, 7, 0), std::vector<polygon>{polygon(vec3(-3, -3, -3), vec3(-3, -3, 3), vec3(3, -3, -3)),
     //                                                polygon(vec3(-3, -3, 3), vec3(3, -3, 3), vec3(3, -3, -3)),
@@ -45,13 +52,15 @@ int main()
     //                                                polygon(vec3(3, -3, 3), vec3(3, 3, 3), vec3(3, -3, -3)),
     //                                                polygon(vec3(3, 3, 3), vec3(3, 3, -3), vec3(3, -3, -3))})};
     std::vector<model> models;
-    models.push_back(importFromFile(std::ifstream("human.obj")));
+    models.push_back(importFromFile(std::ifstream("teapot.obj")));
     // models[0].rotateXZ(M_PI);
     bool sleep = false;
     bool rotate = false;
     bool outline = true;
     std::vector<polygon> drawBuffer;
+    sf::VertexArray drawArray;
     vec3 light{0, -2, -1};
+    light = light.normalize();
     sf::ContextSettings settings;
     settings.antiAliasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode({xRes, yRes}), "3D Render", sf::Style::Default, sf::State::Windowed, settings);
@@ -90,7 +99,7 @@ int main()
             drawBuffer.reserve(drawBuffer.size() + toDraw.size());
             drawBuffer.insert(drawBuffer.end(), toDraw.begin(), toDraw.end());
         }
-        std::sort(drawBuffer.begin(), drawBuffer.end(), [](polygon& pol1, polygon& pol2){return pol1.middle().y > pol2.middle().y;});
+        if (!outline) std::sort(drawBuffer.begin(), drawBuffer.end(), [](polygon& pol1, polygon& pol2){return pol1.middle().y > pol2.middle().y;});
         for (auto pol:drawBuffer) {
 
 
@@ -104,12 +113,12 @@ int main()
                 triangle[1].position = sf::Vector2f(d2Proj[0], d2Proj[1]);
                 triangle[2].position = sf::Vector2f(d3Proj[0], d3Proj[1]);
                 
-                float angle = scalarMult(pol.normal(), cam.convertToCameraRotation(light).normalize());
-                triangle[0].color = pol.color * sf::Color(72 * (0.2 + 0.8 * std::max(angle, 0.f)), 255 * (0.2 + 0.8 * std::max(angle, 0.f)), 69 * (0.2 + 0.8 * std::max(angle, 0.f)), 255);
+                float intensivity = std::max(0.f, (scalarMult(pol.normal(), cam.convertToCameraRotation(light).normalize()) + 0.6f) / 1.6f);
+                triangle[0].color = pol.color * sf::Color(pol.color.r * (0.2 + 0.8 * intensivity), pol.color.g * (0.2 + 0.8 * intensivity), pol.color.b * (0.2 + 0.8 * intensivity), 255);
                 triangle[0].color.a = 255;
-                triangle[1].color = pol.color * sf::Color(72 * (0.2 + 0.8 * std::max(angle, 0.f)), 255 * (0.2 + 0.8 * std::max(angle, 0.f)), 69 * (0.2 + 0.8 * std::max(angle, 0.f)), 255);
+                triangle[1].color = pol.color * sf::Color(pol.color.r  * (0.2 + 0.8 * intensivity), pol.color.g * (0.2 + 0.8 * intensivity), pol.color.b * (0.2 + 0.8 * intensivity), 255);
                 triangle[1].color.a = 255;
-                triangle[2].color = pol.color * sf::Color(72 * (0.2 + 0.8 * std::max(angle, 0.f)), 255 * (0.2 + 0.8 * std::max(angle, 0.f)), 69 * (0.2 + 0.8 * std::max(angle, 0.f)), 255);
+                triangle[2].color = pol.color * sf::Color(pol.color.r  * (0.2 + 0.8 * intensivity), pol.color.g * (0.2 + 0.8 * intensivity), pol.color.b * (0.2 + 0.8 * intensivity), 255);
                 triangle[2].color.a = 255;
                 window.draw(triangle);
 
@@ -130,8 +139,8 @@ int main()
         }
         // light = light * getRotationMatrixXZ(M_PI / 360);
         if (rotate) {
-            models[0].rotateXY(M_PI / 360);
-            models[0].rotateXZ(M_PI / 360);
+            models[0].rotateXY(M_PI / 90);
+            // models[0].rotateXZ(M_PI / 360);
         }
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         cam.rotate(-static_cast<float>(mousePos.x - static_cast<int>(xRes / 2)) / 100, -static_cast<float>(mousePos.y - static_cast<int>(yRes / 2)) / 100);

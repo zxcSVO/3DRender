@@ -9,7 +9,7 @@ std::vector<int> splitFace(std::string& face) {
         if (isdigit(chr)) {
             digits += chr;
         } else {
-            res.push_back(std::stoi(digits));
+            if (!digits.empty()) res.push_back(std::stoi(digits));
             digits = "";
         }
     }
